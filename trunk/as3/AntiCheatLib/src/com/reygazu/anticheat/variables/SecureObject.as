@@ -1,5 +1,8 @@
 package com.reygazu.anticheat.variables
 {
+	import com.reygazu.anticheat.events.CheatManagerEvent;
+	import com.reygazu.anticheat.managers.CheatManager;
+
 	public dynamic class SecureObject
 	{
 
@@ -9,6 +12,8 @@ package com.reygazu.anticheat.variables
 		public function SecureObject()
 		{			
 			hop();	
+			
+			CheatManager.getInstance().addEventListener(CheatManagerEvent.FORCE_HOP,onForceHop);
 		}
 		
 		public function set objectValue(value:Object):void
@@ -42,7 +47,16 @@ package com.reygazu.anticheat.variables
 			while (id==_id)
 				id = String(Math.round(Math.random()*0xFFFFF));	
 		}
+		
+		
+		// Event Handlers
+		
+		private function onForceHop(evt:CheatManagerEvent):void
+		{
+			var temp:Object = objectValue;
 			
+			objectValue = temp;
+		}
 		
 	}
 }
