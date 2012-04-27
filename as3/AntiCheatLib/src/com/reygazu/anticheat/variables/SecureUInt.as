@@ -1,17 +1,29 @@
 package com.reygazu.anticheat.variables
 {
+	import com.reygazu.anticheat.managers.CheatManager;
+
 	public class SecureUInt
 	{
 		private var secureData:SecureObject;
 		
-		public function SecureUInt()
+		private var fake:uint;
+		
+		public function SecureUInt(name:String="Unnamed SecureUInt")
 		{
 			secureData = new SecureObject();
 		}
 		
 		public function set value(data:uint):void
 		{
-			secureData.objectValue = data;			
+			if (fake!=secureData.objectValue) 
+			{
+				CheatManager.getInstance().detectCheat(secureData.name,fake,secureData.objectValue);
+			}
+			
+			
+			secureData.objectValue = data;
+			
+			fake = data;	
 		}
 		
 		public function get value():uint

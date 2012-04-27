@@ -6,19 +6,20 @@ package com.reygazu.anticheat.variables
 	public dynamic class SecureObject
 	{
 
-		private var id:String;
-		private var fake:Object;
+		private var id:String;	
+		private var _name:String;
 		
-		public function SecureObject()
+		
+		public function SecureObject(name:String="Unnamed SecureObject")
 		{			
-			hop();	
+			_name = name;
 			
+			hop();				
 			CheatManager.getInstance().addEventListener(CheatManagerEvent.FORCE_HOP,onForceHop);
 		}
 		
 		public function set objectValue(value:Object):void
 		{
-			
 			// delete the old variable memory location
 			if (this.hasOwnProperty(id))
 			{
@@ -27,11 +28,17 @@ package com.reygazu.anticheat.variables
 			
 			// change memory location of variable
 			hop();
+			
+			
+			
 			// save the variable in the new location
 			this[id] = value;
 			
 			// save the value in a fake var as a decoy. 
-			fake = value;
+			this['fake'] = value;
+			
+			
+			trace("fake es " + this['fake']);
 			
 		}
 		
@@ -48,6 +55,10 @@ package com.reygazu.anticheat.variables
 				id = String(Math.round(Math.random()*0xFFFFF));	
 		}
 		
+		public function get name():String
+		{
+			return _name;			
+		}
 		
 		// Event Handlers
 		

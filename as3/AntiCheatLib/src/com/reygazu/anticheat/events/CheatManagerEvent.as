@@ -6,7 +6,9 @@ package com.reygazu.anticheat.events
 	{
 		
 		public static var FORCE_HOP:String = "forceHop";
+		public static var CHEAT_DETECTION:String = "cheatDetection";
 		
+		public var data:Object;
 		
 		public function CheatManagerEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
