@@ -1,6 +1,7 @@
 package com.reygazu.anticheat.managers
 {
 	import com.reygazu.anticheat.events.CheatManagerEvent;
+	import com.reygazu.anticheat.variables.SecureObject;
 	
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
@@ -9,6 +10,7 @@ package com.reygazu.anticheat.managers
 	import flash.events.EventDispatcher;
 	
 	[Event(name="forceHop", type="com.reygazu.anticheat.events.CheatManagerEvent")]
+	[Event(name="cheatDetection", type="com.reygazu.anticheat.events.CheatManagerEvent")]
 	
 	public class CheatManager extends EventDispatcher
 	{
@@ -71,6 +73,14 @@ package com.reygazu.anticheat.managers
 		{
 			trace("* CheatManager : Force Hop Event Dispatched *"); 
 			this.dispatchEvent(new CheatManagerEvent(CheatManagerEvent.FORCE_HOP));
+		}
+		
+		public function detectCheat(name:String,fakeValue:Object,realValue:Object):void
+		{
+			trace("* CheatManager : cheat detection in " + name + " fake value : " + fakeValue + " != real value " + realValue + " *");
+			var event:CheatManagerEvent = new CheatManagerEvent(CheatManagerEvent.CHEAT_DETECTION);
+			event.data = {variableName:name,fakeValue:fakeValue,realValue:realValue}
+			CheatManager.getInstance().dispatchEvent(event);	
 		}
 
 	
